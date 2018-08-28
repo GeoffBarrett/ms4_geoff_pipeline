@@ -19,9 +19,9 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
         Parameters
         ----------
         raw_fname : INPUT
-            (Optional) MxN raw timeseries array (M = #channels, N = #timepoints). If you input this it will pre-process the data.
+            MxN raw timeseries array (M = #channels, N = #timepoints). If you input this it will pre-process the data.
         pre_fname : INPUT
-            (Optional) MxN pre-processed array timeseries array (M = #channels, N = #timepoints). This is if you want to analyze already pre-processed data.
+            MxN pre-processed array timeseries array (M = #channels, N = #timepoints). This is if you want to analyze already pre-processed data.
         geom_fname : INPUT
             (Optional) geometry file (.csv format).
         params_fname : INPUT
