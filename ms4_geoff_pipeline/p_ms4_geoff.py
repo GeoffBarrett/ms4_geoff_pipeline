@@ -63,13 +63,15 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
     # if you do not provide an input, it will set the value as an empty string via mountainlab
 
     # find a more pythonic way to do this
-    '''if raw_fname == '':
+    if raw_fname == '':
         raw_fname = None
 
     if pre_out_fname == '':
+        print('pre_out_fname', pre_out_fname)
         pre_out_fname = None
 
     if metrics_out_fname == '':
+        print('metrics_out_fname', metrics_out_fname)
         metrics_out_fname = None
 
     if pre_fname == '':
@@ -82,13 +84,12 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
         params_fname = None
 
     if firings_out == '':
-        firings_out = None'''
+        firings_out = None
 
     if raw_fname is None and pre_fname is None:
         raise Exception('You must input a raw_fname or a pre_fname!')
 
-    # if raw_fname is not None and pre_fname is not None:
-    if raw_fname is not None and pre_fname != '':
+    if raw_fname is not None and pre_fname is not None:
         raise Exception('You defined both the raw_fname and the pre_fname, can only use one!')
 
     params = {'freq_min': freq_min,
