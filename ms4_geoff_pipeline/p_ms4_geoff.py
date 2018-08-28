@@ -14,50 +14,50 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
                  firing_rate_thresh=0.05, isolation_thresh=0.95, noise_overlap_thresh=0.03,
                  peak_snr_thresh=1.5, opts={}):
     """
-        Custom Sorting Pipeline. It will pre-process, sort, and curate (using ms_taggedcuration pipeline).
+    Custom Sorting Pipeline. It will pre-process, sort, and curate (using ms_taggedcuration pipeline).
 
-        Parameters
-        ----------
-        raw_fname : INPUT
-            MxN raw timeseries array (M = #channels, N = #timepoints). If you input this it will pre-process the data.
-        pre_fname : INPUT
-            MxN pre-processed array timeseries array (M = #channels, N = #timepoints). This is if you want to analyze already pre-processed data.
-        geom_fname : INPUT
-            (Optional) geometry file (.csv format).
-        params_fname : INPUT
-            (Optional) parameter file (.json format), where the key is the any of the parameters for this pipeline. Any values in this .json file will overwrite any defaults.
+    Parameters
+    ----------
+    raw_fname : INPUT
+        MxN raw timeseries array (M = #channels, N = #timepoints). If you input this it will pre-process the data.
+    pre_fname : INPUT
+        MxN pre-processed array timeseries array (M = #channels, N = #timepoints). This is if you want to analyze already pre-processed data.
+    geom_fname : INPUT
+        (Optional) geometry file (.csv format).
+    params_fname : INPUT
+        (Optional) parameter file (.json format), where the key is the any of the parameters for this pipeline. Any values in this .json file will overwrite any defaults.
 
-        firings_out : OUTPUT
-            The filename that will contain the spike data (.mda file), default to '/firings.mda'
-        pre_out_fname : OUTPUT
-            Optional filename for the pre-processed data.
-        metrics_out_fname : OUTPUT
-            The output filename (.json) for the metrics that will be computed for each unit.
+    firings_out : OUTPUT
+        The filename that will contain the spike data (.mda file), default to '/firings.mda'
+    pre_out_fname : OUTPUT
+        Optional filename for the pre-processed data.
+    metrics_out_fname : OUTPUT
+        The output filename (.json) for the metrics that will be computed for each unit.
 
-        samplerate : float
-            (Optional) The sampling rate in Hz
-        freq_min : float
-            (Optional) The lower endpoint of the frequency band (Hz)
-        freq_max : float
-            (Optional) The upper endpoint of the frequency band (Hz)
-        adjacency_radius : float
-            (Optional) Radius of local sorting neighborhood, corresponding to the geometry file (same units). 0 means each channel is sorted independently. -1 means all channels are included in every neighborhood.
-        detect_sign : int
-            (Optional) Use 1, -1, or 0 to detect positive peaks, negative peaks, or both, respectively
-        detect_threshold : float
-            (Optional) Threshold for event detection, corresponding to the input file. So if the input file is normalized to have noise standard deviation 1 (e.g., whitened), then this is in units of std. deviations away from the mean.
-        detect_interval : int
-            (Optional) The minimum number of timepoints between adjacent spikes detected in the same channel neighborhood.
-        clip_size : int
-            (Optional) Size of extracted clips or snippets, used throughout
-        firing_rate_thresh : float64
-            (Optional) firing rate must be above this
-        isolation_thresh : float64
-            (Optional) isolation must be above this
-        noise_overlap_thresh : float64
-            (Optional) noise_overlap_thresh must be below this
-        peak_snr_thresh : float64
-            (Optional) peak snr must be above this
+    samplerate : float
+        (Optional) The sampling rate in Hz
+    freq_min : float
+        (Optional) The lower endpoint of the frequency band (Hz)
+    freq_max : float
+        (Optional) The upper endpoint of the frequency band (Hz)
+    adjacency_radius : float
+        (Optional) Radius of local sorting neighborhood, corresponding to the geometry file (same units). 0 means each channel is sorted independently. -1 means all channels are included in every neighborhood.
+    detect_sign : int
+        (Optional) Use 1, -1, or 0 to detect positive peaks, negative peaks, or both, respectively
+    detect_threshold : float
+        (Optional) Threshold for event detection, corresponding to the input file. So if the input file is normalized to have noise standard deviation 1 (e.g., whitened), then this is in units of std. deviations away from the mean.
+    detect_interval : int
+        (Optional) The minimum number of timepoints between adjacent spikes detected in the same channel neighborhood.
+    clip_size : int
+        (Optional) Size of extracted clips or snippets, used throughout
+    firing_rate_thresh : float64
+        (Optional) firing rate must be above this
+    isolation_thresh : float64
+        (Optional) isolation must be above this
+    noise_overlap_thresh : float64
+        (Optional) noise_overlap_thresh must be below this
+    peak_snr_thresh : float64
+        (Optional) peak snr must be above this
     """
 
     # if you do not provide an input, it will set the value as an empty string via mountainlab
