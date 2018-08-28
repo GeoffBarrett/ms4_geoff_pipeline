@@ -63,15 +63,17 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
     # if you do not provide an input, it will set the value as an empty string via mountainlab
 
     # find a more pythonic way to do this
+
+    print('pre_out_fname', pre_out_fname)
+    print('metrics_out_fname', metrics_out_fname)
+
     if raw_fname == '':
         raw_fname = None
 
     if pre_out_fname == '':
-        print('pre_out_fname', pre_out_fname)
         pre_out_fname = None
 
     if metrics_out_fname == '':
-        print('metrics_out_fname', metrics_out_fname)
         metrics_out_fname = None
 
     if pre_fname == '':
