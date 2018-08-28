@@ -7,7 +7,8 @@ processor_name = 'ms4_geoff.sort'
 processor_version = '0.1.0'
 
 
-def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fname=None,
+def sort_dataset(*,
+                 raw_fname=None, pre_fname=None, geom_fname=None, params_fname=None,
                  firings_out, pre_out_fname, metrics_out_fname,
                  freq_min=300, freq_max=7000, samplerate=30000, detect_sign=1,
                  adjacency_radius=-1, detect_threshold=3, detect_interval=50, clip_size=50,
@@ -135,14 +136,14 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
             samplerate=params['samplerate'],
             freq_min=params['freq_min'],
             freq_max=params['freq_max'],
-            #opts=opts
+            # opts=opts
         )
 
         # Whiten
         ms4_geoff.whiten(
             timeseries=output_dir + '/filt.mda.prv',
             timeseries_out=pre_out_fname,
-            #opts=opts
+            # opts=opts
         )
 
         sort_fname = pre_out_fname
@@ -170,7 +171,7 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
         detect_sign=params['detect_sign'],
         detect_threshold=params['detect_threshold'],
         clip_size=params['clip_size'],
-        #opts=opts
+        # opts=opts
     )
 
     temp_metrics = output_dir + '/temp_metrics.json'
@@ -184,7 +185,7 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
         firings=firings_out,
         metrics_out=temp_metrics,
         samplerate=params['samplerate'],
-        #opts=opts
+        # opts=opts
     )
 
     # Automated curation
@@ -194,7 +195,8 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
                       isolation_thresh=0.95,
                       noise_overlap_thresh=0.03,
                       peak_snr_thresh=1.5,
-                      opts=opts)
+                      # opts=opts
+                    )
 
     os.remove(temp_metrics)
 
