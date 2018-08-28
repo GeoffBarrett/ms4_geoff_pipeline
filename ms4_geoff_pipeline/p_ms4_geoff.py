@@ -23,7 +23,7 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
         pre_fname : INPUT
             MxN pre-processed array timeseries array (M = #channels, N = #timepoints). This is if you want to analyze already pre-processed data.
         geom_fname : INPUT
-            Optional geometry file (.csv format)
+            Optional geometry file (.csv format).
         params_fname: INPUT
             Optional parameter file (.json format), where the key is the any of the parameters for this pipeline. Any values in this .json file will overwrite any defaults.
 
