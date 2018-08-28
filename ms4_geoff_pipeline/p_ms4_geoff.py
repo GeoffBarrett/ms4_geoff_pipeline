@@ -8,7 +8,7 @@ processor_version = '0.1.0'
 
 
 def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fname=None,
-                 pre_out_fname=None, firings_out=None, metrics_out_fname=None,
+                 firings_out=None, pre_out_fname=None, metrics_out_fname=None,
                  freq_min=300, freq_max=7000, samplerate=30000, detect_sign=1,
                  adjacency_radius=-1, detect_threshold=3, detect_interval=50, clip_size=50,
                  firing_rate_thresh=0.05, isolation_thresh=0.95, noise_overlap_thresh=0.03,
@@ -63,7 +63,7 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
     # if you do not provide an input, it will set the value as an empty string via mountainlab
 
     # find a more pythonic way to do this
-    if raw_fname == '':
+    '''if raw_fname == '':
         raw_fname = None
 
     if pre_out_fname == '':
@@ -82,7 +82,7 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
         params_fname = None
 
     if firings_out == '':
-        firings_out = None
+        firings_out = None'''
 
     if raw_fname is None and pre_fname is None:
         raise Exception('You must input a raw_fname or a pre_fname!')
