@@ -199,7 +199,7 @@ def sort_dataset(*,
                     )
 
     os.remove(temp_metrics)
-
+    return True
 
 def read_dataset_params(params_fname):
     params_fname = mlp.realizeFile(params_fname)
