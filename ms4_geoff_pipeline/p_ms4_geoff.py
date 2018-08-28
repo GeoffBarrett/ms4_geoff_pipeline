@@ -65,15 +65,16 @@ def sort_dataset(*, timeseries, geom_fname='', params_fname='',
     # find a more pythonic way to do this
     '''if raw_fname == '':
         raw_fname = None
-
-    if pre_out_fname == '':
-        pre_out_fname = None'''
+        
+    if pre_fname == '':
+        pre_fname = None
+    '''
 
     if metrics_out_fname == '':
         metrics_out_fname = None
 
-    if pre_fname == '':
-        pre_fname = None
+    if pre_out_fname == '':
+        pre_out_fname = None
 
     if geom_fname == '':
         geom_fname = None
