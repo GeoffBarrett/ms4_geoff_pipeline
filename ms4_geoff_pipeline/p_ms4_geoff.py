@@ -152,7 +152,7 @@ def sort_dataset(*, raw_fname='', pre_fname='', geom_fname='', params_fname='',
 
         if not os.path.exists(pre_fname):
             raise Exception('The following timeseries does not exist: %s!' % pre_fname)
-        
+
         output_dir = os.path.dirname(pre_fname)
         sort_fname = pre_fname
 
