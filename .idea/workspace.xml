@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e3b3cbf1-6b19-457d-aa83-2e05180894be" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ms4_geoff_pipeline/p_ms4_geoff.py" afterPath="$PROJECT_DIR$/ms4_geoff_pipeline/p_ms4_geoff.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ms4_geoff_pipeline/testing_custom_pipeline.ipynb" afterPath="$PROJECT_DIR$/ms4_geoff_pipeline/testing_custom_pipeline.ipynb" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,8 +17,8 @@
       <file leaf-file-name="p_ms4_geoff.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ms4_geoff_pipeline/p_ms4_geoff.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="76" column="28" lean-forward="false" selection-start-line="76" selection-start-column="28" selection-end-line="76" selection-end-column="28" />
+            <state relative-caret-position="765">
+              <caret line="154" column="8" lean-forward="false" selection-start-line="154" selection-start-column="8" selection-end-line="154" selection-end-column="8" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -158,8 +159,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ms4_geoff_pipeline/p_ms4_geoff.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="76" column="28" lean-forward="false" selection-start-line="76" selection-start-column="28" selection-end-line="76" selection-end-column="28" />
+        <state relative-caret-position="765">
+          <caret line="154" column="8" lean-forward="false" selection-start-line="154" selection-start-column="8" selection-end-line="154" selection-end-column="8" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>

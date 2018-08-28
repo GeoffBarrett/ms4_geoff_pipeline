@@ -7,8 +7,8 @@ processor_name = 'ms4_geoff.sort'
 processor_version = '0.1.0'
 
 
-def sort_dataset(*, timeseries, geom_fname='', params_fname='',
-                 firings_out='', pre_out_fname='', metrics_out_fname='', timeseries_raw='true',
+def sort_dataset(*, raw_fname='', pre_fname='', geom_fname='', params_fname='',
+                 firings_out='', pre_out_fname='', metrics_out_fname='',
                  freq_min=300, freq_max=7000, samplerate=30000, detect_sign=1,
                  adjacency_radius=-1, detect_threshold=3, detect_interval=50, clip_size=50,
                  firing_rate_thresh=0.05, isolation_thresh=0.95, noise_overlap_thresh=0.03,
@@ -18,8 +18,10 @@ def sort_dataset(*, timeseries, geom_fname='', params_fname='',
 
         Parameters
         ----------
-        timeseries : INPUT
-            MxN timeseries array (M = #channels, N = #timepoints). If you input this it will pre-process the data. If this is already pre-processed set the timeseries_raw parameter to 'false'.
+        raw_fname : INPUT
+            MxN raw timeseries array (M = #channels, N = #timepoints). If you input this it will pre-process the data.
+        pre_fname : INPUT
+            MxN pre-processed array timeseries array (M = #channels, N = #timepoints). This is if you want to analyze already pre-processed data.
         geom_fname : INPUT
             Optional geometry file (.csv format).
         params_fname : INPUT
@@ -32,8 +34,6 @@ def sort_dataset(*, timeseries, geom_fname='', params_fname='',
         metrics_out_fname : OUTPUT
             The output filename (.json) for the metrics that will be computed for each unit.
 
-        timeseries_raw : str
-            If this is set to 'true' the timeseries input is a raw timeseries, otherwise it is pre-processed.
         samplerate : float
             The sampling rate in Hz
         freq_min : float
@@ -63,18 +63,17 @@ def sort_dataset(*, timeseries, geom_fname='', params_fname='',
     # if you do not provide an input, it will set the value as an empty string via mountainlab
 
     # find a more pythonic way to do this
-    '''if raw_fname == '':
+    if raw_fname == '':
         raw_fname = None
-        
-    if pre_fname == '':
-        pre_fname = None
-    '''
+
+    if pre_out_fname == '':
+        pre_out_fname = None
 
     if metrics_out_fname == '':
         metrics_out_fname = None
 
-    if pre_out_fname == '':
-        pre_out_fname = None
+    if pre_fname == '':
+        pre_fname = None
 
     if geom_fname == '':
         geom_fname = None
@@ -85,11 +84,11 @@ def sort_dataset(*, timeseries, geom_fname='', params_fname='',
     if firings_out == '':
         firings_out = None
 
-    '''if raw_fname is None and pre_fname is None:
+    if raw_fname is None and pre_fname is None:
         raise Exception('You must input a raw_fname or a pre_fname!')
 
     if raw_fname is not None and pre_fname is not None:
-        raise Exception('You defined both the raw_fname and the pre_fname, can only use one!')'''
+        raise Exception('You defined both the raw_fname and the pre_fname, can only use one!')
 
     params = {'freq_min': freq_min,
               'freq_max': freq_max,
@@ -115,14 +114,12 @@ def sort_dataset(*, timeseries, geom_fname='', params_fname='',
     else:
         pass
 
-    # if raw_fname is not None:
-    if timeseries_raw == 'true':
+    if raw_fname is not None:
         # no pre-processing has done, so perform the pre-processing
-        # if not os.path.exists(raw_fname):
-        if not os.path.exists(timeseries):
-            raise Exception('The following timeseries does not exist: %s!' % timeseries)
+        if not os.path.exists(raw_fname):
+            raise Exception('The following timeseries does not exist: %s!' % raw_fname)
 
-        output_dir = os.path.dirname(timeseries)
+        output_dir = os.path.dirname(raw_fname)
 
         if pre_out_fname is None:
             pre_out_fname = output_dir + '/pre.mda.prv'
@@ -132,7 +129,7 @@ def sort_dataset(*, timeseries, geom_fname='', params_fname='',
         # Bandpass filter
         band_pass_out = output_dir + '/filt.mda.prv'
         bandpass_filter(
-            timeseries=timeseries,
+            timeseries=raw_fname,
             timeseries_out=band_pass_out,
             samplerate=params['samplerate'],
             freq_min=params['freq_min'],
@@ -152,7 +149,10 @@ def sort_dataset(*, timeseries, geom_fname='', params_fname='',
         os.remove(band_pass_out)
 
     else:
-        # pre_fname has to be not None by this point, skip pre-processing since this is the input
+
+        if not os.path.exists(pre_fname):
+            raise Exception('The following timeseries does not exist: %s!' % pre_fname)
+        
         output_dir = os.path.dirname(pre_fname)
         sort_fname = pre_fname
 
