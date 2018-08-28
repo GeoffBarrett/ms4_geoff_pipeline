@@ -7,8 +7,8 @@ processor_name = 'ms4_geoff.sort'
 processor_version = '0.1.0'
 
 
-def sort_dataset(*, raw_fname='', pre_fname='', geom_fname='', params_fname='',
-                 pre_out_fname='', firings_out='', metrics_out_fname='',
+def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fname=None,
+                 pre_out_fname=None, firings_out=None, metrics_out_fname=None,
                  freq_min=300, freq_max=7000, samplerate=30000, detect_sign=1,
                  adjacency_radius=-1, detect_threshold=3, detect_interval=50, clip_size=50,
                  firing_rate_thresh=0.05, isolation_thresh=0.95, noise_overlap_thresh=0.03,
@@ -62,9 +62,6 @@ def sort_dataset(*, raw_fname='', pre_fname='', geom_fname='', params_fname='',
 
     # if you do not provide an input, it will set the value as an empty string via mountainlab
 
-    raw_fname, pre_fname, geom_fname, params_fname, pre_out_fname, firings_out, metrics_out_fname = validate_inputs(
-        raw_fname, pre_fname, geom_fname, params_fname, pre_out_fname, firings_out, metrics_out_fname)
-
     if raw_fname is None and pre_fname is None:
         raise Exception('You must input a raw_fname or a pre_fname!')
 
@@ -106,9 +103,10 @@ def sort_dataset(*, raw_fname='', pre_fname='', geom_fname='', params_fname='',
             pre_out_fname = output_dir + '/pre.mda.prv'
 
         # Bandpass filter
+        band_pass_out = output_dir + '/filt.mda.prv'
         bandpass_filter(
             timeseries=raw_fname,
-            timeseries_out=output_dir + '/filt.mda.prv',
+            timeseries_out=band_pass_out,
             samplerate=params['samplerate'],
             freq_min=params['freq_min'],
             freq_max=params['freq_max'],
@@ -123,6 +121,8 @@ def sort_dataset(*, raw_fname='', pre_fname='', geom_fname='', params_fname='',
         )
 
         sort_fname = pre_out_fname
+
+        os.remove(band_pass_out)
 
     else:
         # pre_fname has to be not None by this point, skip pre-processing since this is the input
@@ -170,32 +170,6 @@ def sort_dataset(*, raw_fname='', pre_fname='', geom_fname='', params_fname='',
 
     os.remove(temp_metrics)
 
-
-def validate_inputs(raw_fname, pre_fname, geom_fname, params_fname, pre_out_fname, firings_out_fnane, metrics_out_fname):
-    # figure out a more pythonic way to do this
-
-    if raw_fname == '':
-        raw_fname = None
-
-    if pre_fname == '':
-        pre_fname = None
-
-    if geom_fname == '':
-        geom_fname = None
-
-    if params_fname == '':
-        params_fname = None
-
-    if pre_out_fname == '':
-        pre_out_fname = None
-
-    if firings_out_fnane == '':
-        firings_out_fnane = None
-
-    if metrics_out_fname == '':
-        metrics_out_fname = None
-
-    return raw_fname, pre_fname, geom_fname, params_fname, pre_out_fname, firings_out_fnane, metrics_out_fname
 
 def read_dataset_params(params_fname):
     params_fname = mlp.realizeFile(params_fname)
