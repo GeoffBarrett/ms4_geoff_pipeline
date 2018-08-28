@@ -7,8 +7,8 @@ processor_name = 'ms4_geoff.sort'
 processor_version = '0.1.0'
 
 
-def sort_dataset(*, raw_fname='', pre_fname='', geom_fname='', params_fname='',
-                 firings_out='', pre_out_fname='', metrics_out_fname='',
+def sort_dataset(*, timeseries, geom_fname='', params_fname='',
+                 firings_out='', pre_out_fname='', metrics_out_fname='', timeseries_raw='true',
                  freq_min=300, freq_max=7000, samplerate=30000, detect_sign=1,
                  adjacency_radius=-1, detect_threshold=3, detect_interval=50, clip_size=50,
                  firing_rate_thresh=0.05, isolation_thresh=0.95, noise_overlap_thresh=0.03,
@@ -18,10 +18,8 @@ def sort_dataset(*, raw_fname='', pre_fname='', geom_fname='', params_fname='',
 
         Parameters
         ----------
-        raw_fname : INPUT
-            MxN raw timeseries array (M = #channels, N = #timepoints). If you input this it will pre-process the data.
-        pre_fname : INPUT
-            MxN pre-processed array timeseries array (M = #channels, N = #timepoints). This is if you want to analyze already pre-processed data.
+        timeseries : INPUT
+            MxN timeseries array (M = #channels, N = #timepoints). If you input this it will pre-process the data. If this is already pre-processed set the timeseries_raw parameter to 'false'.
         geom_fname : INPUT
             Optional geometry file (.csv format).
         params_fname : INPUT
@@ -34,6 +32,8 @@ def sort_dataset(*, raw_fname='', pre_fname='', geom_fname='', params_fname='',
         metrics_out_fname : OUTPUT
             The output filename (.json) for the metrics that will be computed for each unit.
 
+        timeseries_raw : str
+            If this is set to 'true' the timeseries input is a raw timeseries, otherwise it is pre-processed.
         samplerate : float
             The sampling rate in Hz
         freq_min : float
