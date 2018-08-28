@@ -63,7 +63,7 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
     # if you do not provide an input, it will set the value as an empty string via mountainlab
 
     # find a more pythonic way to do this
-    '''if raw_fname == '':
+    if raw_fname == '':
         raw_fname = None
 
     if pre_out_fname == '':
@@ -82,7 +82,7 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
         params_fname = None
 
     if firings_out == '':
-        firings_out = None'''
+        firings_out = None
 
     if raw_fname is None and pre_fname is None:
         raise Exception('You must input a raw_fname or a pre_fname!')
@@ -123,6 +123,8 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
 
         if pre_out_fname is None:
             pre_out_fname = output_dir + '/pre.mda.prv'
+
+        print('Creating the following pre-process file: %s' % pre_out_fname)
 
         # Bandpass filter
         band_pass_out = output_dir + '/filt.mda.prv'
