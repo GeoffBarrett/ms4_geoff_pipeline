@@ -88,7 +88,7 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
         raise Exception('You must input a raw_fname or a pre_fname!')
 
     # if raw_fname is not None and pre_fname is not None:
-    if raw_fname is not None and pre_fname == '':
+    if raw_fname is not None and pre_fname != '':
         raise Exception('You defined both the raw_fname and the pre_fname, can only use one!')
 
     params = {'freq_min': freq_min,
