@@ -62,10 +62,32 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
 
     # if you do not provide an input, it will set the value as an empty string via mountainlab
 
-    if not raw_fname and not pre_fname:
+    # find a more pythonic way to do this
+    if raw_fname == '':
+        raw_fname = None
+
+    if pre_out_fname == '':
+        pre_out_fname = None
+
+    if metrics_out_fname == '':
+        metrics_out_fname = None
+
+    if pre_fname == '':
+        pre_fname = None
+
+    if geom_fname == '':
+        geom_fname = None
+
+    if params_fname == '':
+        params_fname = None
+
+    if firings_out == '':
+        firings_out = None
+
+    if raw_fname is None and pre_fname is None:
         raise Exception('You must input a raw_fname or a pre_fname!')
 
-    if raw_fname and pre_fname:
+    if raw_fname is not None and pre_fname is not None:
         raise Exception('You defined both the raw_fname and the pre_fname, can only use one!')
 
     params = {'freq_min': freq_min,
@@ -82,7 +104,7 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
               'peak_snr_thresh': peak_snr_thresh,
     }
 
-    if params_fname:
+    if params_fname is not None:
         if os.path.exists(params_fname):
             ds_params = read_dataset_params(params_fname)
 
@@ -92,14 +114,14 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
     else:
         pass
 
-    if raw_fname:
+    if raw_fname is not None:
         # no pre-processing has done, so perform the pre-processing
         if not os.path.exists(raw_fname):
             raise Exception('Raw fname does not exist!')
 
         output_dir = os.path.dirname(raw_fname)
 
-        if not pre_out_fname:
+        if pre_out_fname is None:
             pre_out_fname = output_dir + '/pre.mda.prv'
 
         # Bandpass filter
@@ -131,7 +153,7 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
 
     # Sort
 
-    if not firings_out:
+    if firings_out is None:
         firings_out = output_dir + '/firings.mda'
 
     ms4alg_sort(
@@ -147,7 +169,7 @@ def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fnam
 
     temp_metrics = output_dir + '/temp_metrics.json'
 
-    if not metrics_out_fname:
+    if metrics_out_fname is None:
         metrics_out_fname = output_dir + '/cluster_metrics.json'
 
     # Compute cluster metrics
@@ -218,7 +240,7 @@ def ms4alg_sort(*, timeseries, geom, firings_out, detect_sign, adjacency_radius,
     pp['clip_size'] = clip_size
 
     inputs = {'timeseries': timeseries}
-    if geom:
+    if geom is not None:
         inputs['geom'] = geom
 
     mlp.runProcess(
