@@ -7,8 +7,8 @@ processor_name = 'ms4_geoff.sort'
 processor_version = '0.1.0'
 
 
-def sort_dataset(*, raw_fname='', pre_fname='', geom_fname='', params_fname='',
-                 firings_out='', pre_out_fname='', metrics_out_fname='',
+def sort_dataset(*, raw_fname=None, pre_fname=None, geom_fname=None, params_fname=None,
+                 firings_out=None, pre_out_fname=None, metrics_out_fname=None,
                  freq_min=300, freq_max=7000, samplerate=30000, detect_sign=1,
                  adjacency_radius=-1, detect_threshold=3, detect_interval=50, clip_size=50,
                  firing_rate_thresh=0.05, isolation_thresh=0.95, noise_overlap_thresh=0.03,
