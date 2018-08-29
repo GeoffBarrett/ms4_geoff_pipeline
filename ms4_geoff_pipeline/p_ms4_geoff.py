@@ -63,7 +63,7 @@ def sort_dataset(*,
 
     # if you do not provide an input, it will set the value as an empty string via mountainlab
 
-    # find a more pythonic way to do this
+    # TODO: find a more pythonic way to do this
 
     if raw_fname == '':
         raw_fname = None
@@ -85,6 +85,7 @@ def sort_dataset(*,
 
     if firings_out == '':
         firings_out = None
+    # END TODO
 
     if raw_fname is None and pre_fname is None:
         raise Exception('You must input a raw_fname or a pre_fname!')
