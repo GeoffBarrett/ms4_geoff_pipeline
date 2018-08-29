@@ -9,7 +9,7 @@ processor_version = '0.1.0'
 
 def sort_dataset(*,
                  raw_fname=None, pre_fname=None, geom_fname=None, params_fname=None,
-                 firings_out, pre_out_fname, metrics_out_fname,
+                 firings_out, filt_out_fname, pre_out_fname, metrics_out_fname,
                  freq_min=300, freq_max=7000, samplerate=30000, detect_sign=1,
                  adjacency_radius=-1, detect_threshold=3, detect_interval=50, clip_size=50,
                  firing_rate_thresh=0.05, isolation_thresh=0.95, noise_overlap_thresh=0.03,
@@ -31,7 +31,9 @@ def sort_dataset(*,
     firings_out : OUTPUT
         The filename that will contain the spike data (.mda file), default to '/firings.mda'
     pre_out_fname : OUTPUT
-        Optional filename for the pre-processed data.
+        Optional filename for the filtered data (just filtered, no whitening).
+    pre_out_fname : OUTPUT
+        Optional filename for the pre-processed data (filtered and whitened).
     metrics_out_fname : OUTPUT
         The output filename (.json) for the metrics that will be computed for each unit.
 
@@ -70,6 +72,9 @@ def sort_dataset(*,
 
     if pre_out_fname == '':
         pre_out_fname = None
+
+    if filt_out_fname == '':
+        filt_out_fname = None
 
     if metrics_out_fname == '':
         metrics_out_fname = None
@@ -124,32 +129,30 @@ def sort_dataset(*,
 
         output_dir = os.path.dirname(raw_fname)
 
-        if pre_out_fname is None:
-            pre_out_fname = output_dir + '/pre.mda.prv'
-
-        print('Creating the following pre-process file: %s' % pre_out_fname)
+        if filt_out_fname is None:
+            filt_out_fname = output_dir + '/filt.mda.prv'
 
         # Bandpass filter
-        band_pass_out = output_dir + '/filt.mda.prv'
         ms4_geoff.bandpass_filter(
             timeseries=raw_fname,
-            timeseries_out=band_pass_out,
+            timeseries_out=filt_out_fname,
             samplerate=params['samplerate'],
             freq_min=params['freq_min'],
             freq_max=params['freq_max'],
             # opts=opts
         )
 
+        if pre_out_fname is None:
+            pre_out_fname = output_dir + '/pre.mda.prv'
+
         # Whiten
         ms4_geoff.whiten(
-            timeseries=output_dir + '/filt.mda.prv',
+            timeseries=filt_out_fname,
             timeseries_out=pre_out_fname,
             # opts=opts
         )
 
         sort_fname = pre_out_fname
-
-        os.remove(band_pass_out)
 
     else:
 
