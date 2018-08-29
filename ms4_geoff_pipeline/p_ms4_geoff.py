@@ -30,7 +30,7 @@ def sort_dataset(*,
 
     firings_out : OUTPUT
         The filename that will contain the spike data (.mda file), default to '/firings.mda'
-    pre_out_fname : OUTPUT
+    filt_out_fname : OUTPUT
         Optional filename for the filtered data (just filtered, no whitening).
     pre_out_fname : OUTPUT
         Optional filename for the pre-processed data (filtered and whitened).
