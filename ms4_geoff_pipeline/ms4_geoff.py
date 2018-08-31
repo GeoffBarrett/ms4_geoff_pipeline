@@ -32,12 +32,14 @@ def whiten(*, timeseries, timeseries_out, opts={}):
     )
 
 
-def ms4alg_sort(*, timeseries, geom, firings_out, detect_sign, adjacency_radius, detect_threshold, clip_size, opts={}):
+def ms4alg_sort(*, timeseries, geom, firings_out, detect_sign, adjacency_radius, detect_threshold, detect_interval,
+                clip_size, opts={}):
     pp = {}
     pp['detect_sign'] = detect_sign
     pp['adjacency_radius'] = adjacency_radius
     pp['detect_threshold'] = detect_threshold
     pp['clip_size'] = clip_size
+    pp['detect_interval'] = detect_interval
 
     inputs = {'timeseries': timeseries}
     if geom is not None:

@@ -11,7 +11,7 @@ def sort_dataset(*,
                  raw_fname=None, pre_fname=None, geom_fname=None, params_fname=None,
                  firings_out, filt_out_fname, pre_out_fname, metrics_out_fname,
                  freq_min=300, freq_max=7000, samplerate=30000, detect_sign=1,
-                 adjacency_radius=-1, detect_threshold=3, detect_interval=50, clip_size=50,
+                 adjacency_radius=-1, detect_threshold=3, detect_interval=10, clip_size=50,
                  firing_rate_thresh=0.05, isolation_thresh=0.95, noise_overlap_thresh=0.03,
                  peak_snr_thresh=1.5):
     """
@@ -174,6 +174,7 @@ def sort_dataset(*,
         adjacency_radius=params['adjacency_radius'],
         detect_sign=params['detect_sign'],
         detect_threshold=params['detect_threshold'],
+        detect_interval=params['detect_interval'],
         clip_size=params['clip_size'],
         # opts=opts
     )
