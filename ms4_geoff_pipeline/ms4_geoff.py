@@ -1,4 +1,5 @@
 from mountainlab_pytools import mlproc as mlp
+import os
 
 
 def bandpass_filter(*, timeseries, timeseries_out, samplerate, freq_min, freq_max, opts={}):
@@ -18,7 +19,25 @@ def bandpass_filter(*, timeseries, timeseries_out, samplerate, freq_min, freq_ma
     )
 
 
-def whiten(*, timeseries, timeseries_out, opts={}):
+def _mask_artifacts(*, timeseries, timeseries_out, threshold=6, chunk_size=2000, num_write_chunks=150, opts={}):
+    return mlp.runProcess(
+        'ephys.mask_out_artifacts',
+        {
+            'timeseries': timeseries
+        },
+        {
+            'timeseries_out': timeseries_out
+        },
+        {
+            'threshold': threshold,
+            'chunk_size': chunk_size,
+            'num_write_chunks': num_write_chunks,
+        },
+        opts
+    )
+
+
+def _whiten(*, timeseries, timeseries_out, opts={}):
     return mlp.runProcess(
         'ephys.whiten',
         {
@@ -33,13 +52,14 @@ def whiten(*, timeseries, timeseries_out, opts={}):
 
 
 def ms4alg_sort(*, timeseries, geom, firings_out, detect_sign, adjacency_radius, detect_threshold, detect_interval,
-                clip_size, opts={}):
+                clip_size, num_workers=os.cpu_count(), opts={}):
     pp = {}
     pp['detect_sign'] = detect_sign
     pp['adjacency_radius'] = adjacency_radius
     pp['detect_threshold'] = detect_threshold
     pp['clip_size'] = clip_size
     pp['detect_interval'] = detect_interval
+    pp['num_workers'] = num_workers
 
     inputs = {'timeseries': timeseries}
     if geom is not None:

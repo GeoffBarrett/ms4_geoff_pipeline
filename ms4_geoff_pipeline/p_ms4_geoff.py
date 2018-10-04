@@ -8,12 +8,14 @@ processor_version = '0.1.0'
 
 
 def sort_dataset(*,
-                 raw_fname=None, pre_fname=None, geom_fname=None, params_fname=None,
-                 firings_out, filt_out_fname, pre_out_fname, metrics_out_fname,
+                 raw_fname=None, filt_fname=None, pre_fname=None, geom_fname=None, params_fname=None,
+                 firings_out, filt_out_fname='', pre_out_fname='', metrics_out_fname='', masked_out_fname='',
                  freq_min=300, freq_max=7000, samplerate=30000, detect_sign=1,
                  adjacency_radius=-1, detect_threshold=3, detect_interval=10, clip_size=50,
                  firing_rate_thresh=0.05, isolation_thresh=0.95, noise_overlap_thresh=0.03,
-                 peak_snr_thresh=1.5):
+                 peak_snr_thresh=1.5, mask_artifacts='true', whiten='true',
+                 mask_threshold=6, mask_chunk_size=2000,
+                 mask_num_write_chunks=15, num_workers=os.cpu_count()):
     """
     Custom Sorting Pipeline. It will pre-process, sort, and curate (using ms_taggedcuration pipeline).
 
@@ -21,6 +23,8 @@ def sort_dataset(*,
     ----------
     raw_fname : INPUT
         MxN raw timeseries array (M = #channels, N = #timepoints). If you input this it will pre-process the data.
+    filt_fname : INPUT
+        MxN raw timeseries array (M = #channels, N = #timepoints). This input contains data that has already been filtered.
     pre_fname : INPUT
         MxN pre-processed array timeseries array (M = #channels, N = #timepoints). This is if you want to analyze already pre-processed data.
     geom_fname : INPUT
@@ -32,10 +36,12 @@ def sort_dataset(*,
         The filename that will contain the spike data (.mda file), default to '/firings.mda'
     filt_out_fname : OUTPUT
         Optional filename for the filtered data (just filtered, no whitening).
+    masked_out_fname : OUTPUT
+        Optional filename for the masked_data.
     pre_out_fname : OUTPUT
         Optional filename for the pre-processed data (filtered and whitened).
     metrics_out_fname : OUTPUT
-        The output filename (.json) for the metrics that will be computed for each unit.
+        The optional  output filename (.json) for the metrics that will be computed for each unit.
 
     samplerate : float
         (Optional) The sampling rate in Hz
@@ -61,7 +67,33 @@ def sort_dataset(*,
         (Optional) noise_overlap_thresh must be below this
     peak_snr_thresh : float64
         (Optional) peak snr must be above this
+    mask_artifacts : str
+        (Optional) if set to 'true', it will mask the large amplitude artifacts, if 'false' it will not.
+    whiten : str
+        (Optional) if set to 'true', it will whiten the signal (assuming the input is raw_fname, if 'false' it will not.
+    mask_threshold : int
+        (Optional) Number of standard deviations away from the mean RSS for the chunk to be considered as artifact.
+    mask_chunk_size: int
+        This chunk size will be the number of samples that will be set to zero if the RSS of this chunk is above threshold.
+    mask_num_write_chunks: int
+        How many mask_chunks will be simultaneously written to mask_out_fname (default of 150).
+    num_workers : int
+        (Optional) Number of simultaneous workers (or processes). The default is multiprocessing.cpu_count().
     """
+
+    if mask_artifacts == 'true':
+        mask = True
+    elif mask_artifacts == 'false':
+        mask_artifacts = False
+    else:
+        raise Exception("mask_artifacts must be set to 'true' or 'false'!")
+
+    if whiten == 'true':
+        whiten = True
+    elif whiten == 'false':
+        whiten = False
+    else:
+        raise Exception("whiten must be set to 'true' or 'false'!")
 
     # if you do not provide an input, it will set the value as an empty string via mountainlab
 
@@ -69,6 +101,12 @@ def sort_dataset(*,
 
     if raw_fname == '':
         raw_fname = None
+
+    if filt_fname == '':
+        filt_fname = None
+
+    if masked_out_fname == '':
+        masked_out_fname = None
 
     if pre_out_fname == '':
         pre_out_fname = None
@@ -90,10 +128,11 @@ def sort_dataset(*,
 
     if firings_out == '':
         firings_out = None
+
     # END TODO
 
-    if raw_fname is None and pre_fname is None:
-        raise Exception('You must input a raw_fname or a pre_fname!')
+    if raw_fname is None and pre_fname is None and filt_fname is None:
+        raise Exception('You must input a raw_fname, filt_fname, or a pre_fname!')
 
     if raw_fname is not None and pre_fname is not None:
         raise Exception('You defined both the raw_fname and the pre_fname, can only use one!')
@@ -106,11 +145,16 @@ def sort_dataset(*,
               'detect_threshold': detect_threshold,
               'detect_interval': detect_interval,
               'clip_size': clip_size,
-              'firing_rate_thresh':  firing_rate_thresh,
+              'firing_rate_thresh': firing_rate_thresh,
               'isolation_thresh': isolation_thresh,
               'noise_overlap_thresh': noise_overlap_thresh,
               'peak_snr_thresh': peak_snr_thresh,
-    }
+              'mask_threshold': mask_threshold,
+              'mask_chunk_size': mask_chunk_size,
+              'mask_num_write_chunks': mask_num_write_chunks,
+              'mask_artifacts': mask_artifacts,
+              'num_workers': num_workers,
+              }
 
     if params_fname is not None:
         if os.path.exists(params_fname):
@@ -133,7 +177,7 @@ def sort_dataset(*,
             filt_out_fname = output_dir + '/filt.mda.prv'
 
         # Bandpass filter
-        ms4_geoff.bandpass_filter(
+        bandpass_filter(
             timeseries=raw_fname,
             timeseries_out=filt_out_fname,
             samplerate=params['samplerate'],
@@ -142,20 +186,86 @@ def sort_dataset(*,
             # opts=opts
         )
 
-        if pre_out_fname is None:
-            pre_out_fname = output_dir + '/pre.mda.prv'
+        if params['mask_artifacts']:
+            # if the user decided to mask the artifacts, do so
+            if masked_out_fname is None:
+                masked_out_fname = output_dir + '/masked.mda.prv'
 
-        # Whiten
-        ms4_geoff.whiten(
-            timeseries=filt_out_fname,
-            timeseries_out=pre_out_fname,
-            # opts=opts
-        )
+            _mask_artifacts(
+                timeseries=filt_out_fname,
+                timeseries_out=masked_out_fname,
+                threshold=params['mask_threshold'],
+                chunk_size=params['mask_chunk_size'],
+                num_write_chunks=params['mask_num_write_chunks'],
+                # opts=opts
+            )
 
-        sort_fname = pre_out_fname
+            whiten_input = masked_out_fname
+
+        else:
+            # otherwise use the bandpassed data as an input
+            whiten_input = filt_out_fname
+
+        if whiten:
+            if pre_out_fname is None:
+                pre_out_fname = output_dir + '/pre.mda.prv'
+
+            # Whiten
+            _whiten(
+                timeseries=whiten_input,
+                timeseries_out=pre_out_fname,
+                # opts=opts
+            )
+
+            sort_fname = pre_out_fname
+        else:
+            sort_fname = whiten_input
+
+    elif filt_fname is not None:
+        # then the data has already been filtered so just mask artifacts/whiten if desired
+
+        if not os.path.exists(filt_fname):
+            raise Exception('The following timeseries does not exist: %s!' % filt_fname)
+
+        output_dir = os.path.dirname(filt_fname)
+
+        if params['mask_artifacts']:
+            # if the user decided to mask the artifacts, do so
+            if masked_out_fname is None:
+                masked_out_fname = output_dir + '/masked.mda.prv'
+
+            _mask_artifacts(
+                timeseries=filt_fname,
+                timeseries_out=masked_out_fname,
+                threshold=params['mask_threshold'],
+                chunk_size=params['mask_chunk_size'],
+                num_write_chunks=params['mask_num_write_chunks'],
+                # opts=opts
+            )
+
+            whiten_input = masked_out_fname
+
+        else:
+            # otherwise use the filtered data as an input
+            whiten_input = filt_fname
+
+        if whiten:
+            if pre_out_fname is None:
+                pre_out_fname = output_dir + '/pre.mda.prv'
+
+            # Whiten
+            _whiten(
+                timeseries=whiten_input,
+                timeseries_out=pre_out_fname,
+                # opts=opts
+            )
+
+            sort_fname = pre_out_fname
+        else:
+            sort_fname = whiten_input
 
     else:
-
+        # then the data has alreayd been pre-processed as the pre_fname is the one defined
         if not os.path.exists(pre_fname):
             raise Exception('The following timeseries does not exist: %s!' % pre_fname)
 
@@ -167,7 +277,7 @@ def sort_dataset(*,
     if firings_out is None:
         firings_out = output_dir + '/firings.mda'
 
-    ms4_geoff. ms4alg_sort(
+    ms4alg_sort(
         timeseries=sort_fname,
         geom=geom_fname,
         firings_out=firings_out,
@@ -176,6 +286,7 @@ def sort_dataset(*,
         detect_threshold=params['detect_threshold'],
         detect_interval=params['detect_interval'],
         clip_size=params['clip_size'],
+        num_workers=params['num_workers'],
         # opts=opts
     )
 
@@ -185,7 +296,7 @@ def sort_dataset(*,
         metrics_out_fname = output_dir + '/cluster_metrics.json'
 
     # Compute cluster metrics
-    ms4_geoff.compute_cluster_metrics(
+    compute_cluster_metrics(
         timeseries=sort_fname,
         firings=firings_out,
         metrics_out=temp_metrics,
@@ -193,18 +304,18 @@ def sort_dataset(*,
         # opts=opts
     )
 
-    # Automated curation
-    ms4_geoff.add_curation_tags(cluster_metrics=temp_metrics,
+    add_curation_tags(cluster_metrics=temp_metrics,
                       output_filename=metrics_out_fname,
-                      firing_rate_thresh=0.05,
-                      isolation_thresh=0.95,
-                      noise_overlap_thresh=0.03,
-                      peak_snr_thresh=1.5,
+                      firing_rate_thresh=params['firing_rate_thresh'],
+                      isolation_thresh=params['isolation_thresh'],
+                      noise_overlap_thresh=params['noise_overlap_thresh'],
+                      peak_snr_thresh=params['peak_snr_thresh'],
                       # opts=opts
-                    )
+                      )
 
     os.remove(temp_metrics)
     return True
+
 
 def read_dataset_params(params_fname):
     params_fname = mlp.realizeFile(params_fname)
@@ -212,7 +323,7 @@ def read_dataset_params(params_fname):
         raise Exception('Dataset parameter file does not exist: ' + params_fname)
     with open(params_fname) as f:
         return json.load(f)
-
+    
 
 sort_dataset.name = processor_name
 sort_dataset.version = processor_version
