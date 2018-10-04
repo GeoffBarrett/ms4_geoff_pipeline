@@ -73,9 +73,9 @@ def sort_dataset(*,
         (Optional) if set to 'true', it will whiten the signal (assuming the input is raw_fname, if 'false' it will not.
     mask_threshold : int
         (Optional) Number of standard deviations away from the mean RSS for the chunk to be considered as artifact.
-    mask_chunk_size: int
+    mask_chunk_size : int
         This chunk size will be the number of samples that will be set to zero if the RSS of this chunk is above threshold.
-    mask_num_write_chunks: int
+    mask_num_write_chunks : int
         How many mask_chunks will be simultaneously written to mask_out_fname (default of 150).
     num_workers : int
         (Optional) Number of simultaneous workers (or processes). The default is multiprocessing.cpu_count().
@@ -323,7 +323,7 @@ def read_dataset_params(params_fname):
         raise Exception('Dataset parameter file does not exist: ' + params_fname)
     with open(params_fname) as f:
         return json.load(f)
-    
+
 
 sort_dataset.name = processor_name
 sort_dataset.version = processor_version
