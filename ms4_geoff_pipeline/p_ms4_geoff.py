@@ -177,7 +177,7 @@ def sort_dataset(*,
             filt_out_fname = output_dir + '/filt.mda.prv'
 
         # Bandpass filter
-        bandpass_filter(
+        ms4_geoff.bandpass_filter(
             timeseries=raw_fname,
             timeseries_out=filt_out_fname,
             samplerate=params['samplerate'],
@@ -191,7 +191,7 @@ def sort_dataset(*,
             if masked_out_fname is None:
                 masked_out_fname = output_dir + '/masked.mda.prv'
 
-            _mask_artifacts(
+            ms4_geoff._mask_artifacts(
                 timeseries=filt_out_fname,
                 timeseries_out=masked_out_fname,
                 threshold=params['mask_threshold'],
@@ -211,7 +211,7 @@ def sort_dataset(*,
                 pre_out_fname = output_dir + '/pre.mda.prv'
 
             # Whiten
-            _whiten(
+            ms4_geoff._whiten(
                 timeseries=whiten_input,
                 timeseries_out=pre_out_fname,
                 # opts=opts
@@ -234,7 +234,7 @@ def sort_dataset(*,
             if masked_out_fname is None:
                 masked_out_fname = output_dir + '/masked.mda.prv'
 
-            _mask_artifacts(
+            ms4_geoff._mask_artifacts(
                 timeseries=filt_fname,
                 timeseries_out=masked_out_fname,
                 threshold=params['mask_threshold'],
@@ -254,7 +254,7 @@ def sort_dataset(*,
                 pre_out_fname = output_dir + '/pre.mda.prv'
 
             # Whiten
-            _whiten(
+            ms4_geoff._whiten(
                 timeseries=whiten_input,
                 timeseries_out=pre_out_fname,
                 # opts=opts
@@ -277,7 +277,7 @@ def sort_dataset(*,
     if firings_out is None:
         firings_out = output_dir + '/firings.mda'
 
-    ms4alg_sort(
+    ms4_geoff.ms4alg_sort(
         timeseries=sort_fname,
         geom=geom_fname,
         firings_out=firings_out,
@@ -296,7 +296,7 @@ def sort_dataset(*,
         metrics_out_fname = output_dir + '/cluster_metrics.json'
 
     # Compute cluster metrics
-    compute_cluster_metrics(
+    ms4_geoff.compute_cluster_metrics(
         timeseries=sort_fname,
         firings=firings_out,
         metrics_out=temp_metrics,
@@ -304,7 +304,7 @@ def sort_dataset(*,
         # opts=opts
     )
 
-    add_curation_tags(cluster_metrics=temp_metrics,
+    ms4_geoff.add_curation_tags(cluster_metrics=temp_metrics,
                       output_filename=metrics_out_fname,
                       firing_rate_thresh=params['firing_rate_thresh'],
                       isolation_thresh=params['isolation_thresh'],
