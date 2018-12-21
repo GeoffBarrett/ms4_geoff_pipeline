@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e3b3cbf1-6b19-457d-aa83-2e05180894be" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ms4_geoff_pipeline/ms4_geoff.py" afterPath="$PROJECT_DIR$/ms4_geoff_pipeline/ms4_geoff.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ms4_geoff_pipeline/p_ms4_geoff.py" afterPath="$PROJECT_DIR$/ms4_geoff_pipeline/p_ms4_geoff.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,44 +17,10 @@
       <file leaf-file-name="p_ms4_geoff.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ms4_geoff_pipeline/p_ms4_geoff.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="632">
-              <caret line="325" column="4" lean-forward="false" selection-start-line="325" selection-start-column="4" selection-end-line="325" selection-end-column="4" />
+            <state relative-caret-position="643">
+              <caret line="252" column="59" lean-forward="true" selection-start-line="252" selection-start-column="59" selection-end-line="252" selection-end-column="59" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="load_intan_rhd_format.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Google Drive/CUMC/Code/Python/Notebooks/IntanMSGUI/load_intan_rhd_format.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="23" column="0" lean-forward="false" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="30" />
-              <folding>
-                <element signature="e#52#86#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="intan_rhd_functions.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Google Drive/CUMC/Code/Python/Notebooks/IntanMSGUI/intan_rhd_functions.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8415">
-              <caret line="501" column="0" lean-forward="false" selection-start-line="501" selection-start-column="0" selection-end-line="501" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="intan_rhd_functions.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Documents/Code/Python/IntanMSGUI/core/intan_rhd_functions.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7106">
-              <caret line="424" column="0" lean-forward="false" selection-start-line="424" selection-start-column="0" selection-end-line="424" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -64,7 +29,7 @@
       <file leaf-file-name="ms4_geoff.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ms4_geoff_pipeline/ms4_geoff.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
+            <state relative-caret-position="-1422">
               <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
@@ -96,6 +61,13 @@
       <find>ms4_geoff.</find>
       <find>get_cue_json_parameter</find>
       <find>num_workers=params['num_workers']</find>
+      <find>def decode</find>
+      <find>positions_to_labels</find>
+      <find>pos2fiftyhz</find>
+      <find>get_data_limits</find>
+      <find>sync_positions_with_pulse</find>
+      <find>mask_artifacts</find>
+      <find>pre_fname</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -111,15 +83,17 @@
         <option value="$USER_HOME$/Documents/Code/Python/IntanMSGUI/core/intan_rhd_functions.py" />
         <option value="$USER_HOME$/Google Drive/CUMC/Code/Python/Notebooks/IntanMSGUI/intan_rhd_functions.py" />
         <option value="$PROJECT_DIR$/ms4_geoff_pipeline/ms4_geoff.py" />
+        <option value="$USER_HOME$/Google Drive/CUMC/Code/Python/Notebooks/IntanMSGUI/mdaSort.py" />
+        <option value="$USER_HOME$/Documents/Code/Python/IntanMSGUI/core/mdaSort.py" />
         <option value="$PROJECT_DIR$/ms4_geoff_pipeline/p_ms4_geoff.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-1288" />
-    <option name="y" value="161" />
-    <option name="width" value="1296" />
-    <option name="height" value="1000" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1176" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -136,7 +110,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -164,7 +138,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -232,10 +206,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1288" y="161" width="1296" height="1000" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2588997" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17643923" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -287,7 +261,55 @@
         <state relative-caret-position="272">
           <caret line="23" column="0" lean-forward="false" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="30" />
           <folding>
-            <element signature="e#52#86#0" expanded="true" />
+            <element signature="e#52#86#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Google Drive/CUMC/Code/Python/Notebooks/IntanMSGUI/intan_rhd_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8415">
+          <caret line="501" column="0" lean-forward="false" selection-start-line="501" selection-start-column="0" selection-end-line="501" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/Code/Python/IntanMSGUI/core/intan_rhd_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7106">
+          <caret line="424" column="0" lean-forward="false" selection-start-line="424" selection-start-column="0" selection-end-line="424" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ms4_geoff_pipeline/ms4_geoff.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ms4_geoff_pipeline/p_ms4_geoff.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Google Drive/CUMC/Code/Python/Notebooks/IntanMSGUI/load_intan_rhd_format.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="23" column="0" lean-forward="false" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="30" />
+          <folding>
+            <element signature="e#52#86#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -335,7 +357,7 @@
         <state relative-caret-position="272">
           <caret line="23" column="0" lean-forward="false" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="30" />
           <folding>
-            <element signature="e#52#86#0" expanded="true" />
+            <element signature="e#52#86#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -383,7 +405,7 @@
         <state relative-caret-position="272">
           <caret line="23" column="0" lean-forward="false" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="30" />
           <folding>
-            <element signature="e#52#86#0" expanded="true" />
+            <element signature="e#52#86#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -509,7 +531,7 @@
         <state relative-caret-position="272">
           <caret line="23" column="0" lean-forward="false" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="30" />
           <folding>
-            <element signature="e#52#86#0" expanded="true" />
+            <element signature="e#52#86#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -563,16 +585,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Documents/Code/Python/IntanMSGUI/core/intan_rhd_functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7106">
-          <caret line="424" column="0" lean-forward="false" selection-start-line="424" selection-start-column="0" selection-end-line="424" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Google Drive/CUMC/Code/Python/Notebooks/IntanMSGUI/intan_rhd_functions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8415">
@@ -588,9 +600,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Documents/Code/Python/Notebooks/gus/code/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="395" column="0" lean-forward="true" selection-start-line="395" selection-start-column="0" selection-end-line="395" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/Code/Python/Notebooks/gus/code/decoding.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1037">
+          <caret line="65" column="31" lean-forward="false" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/Code/Python/VirtualMazeGUI/core/WritePos.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2346">
+          <caret line="147" column="8" lean-forward="false" selection-start-line="147" selection-start-column="8" selection-end-line="147" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Google Drive/CUMC/Code/Python/Notebooks/IntanMSGUI/mdaSort.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4131">
+          <caret line="248" column="0" lean-forward="false" selection-start-line="248" selection-start-column="0" selection-end-line="248" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/Code/Python/IntanMSGUI/core/mdaSort.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="242" column="0" lean-forward="false" selection-start-line="242" selection-start-column="0" selection-end-line="242" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/Code/Python/IntanMSGUI/core/intan_rhd_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="958">
+          <caret line="424" column="0" lean-forward="false" selection-start-line="424" selection-start-column="0" selection-end-line="424" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ms4_geoff_pipeline/ms4_geoff.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
+        <state relative-caret-position="-1422">
           <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
@@ -600,8 +661,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ms4_geoff_pipeline/p_ms4_geoff.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="632">
-          <caret line="325" column="4" lean-forward="false" selection-start-line="325" selection-start-column="4" selection-end-line="325" selection-end-column="4" />
+        <state relative-caret-position="643">
+          <caret line="252" column="59" lean-forward="true" selection-start-line="252" selection-start-column="59" selection-end-line="252" selection-end-column="59" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
           </folding>

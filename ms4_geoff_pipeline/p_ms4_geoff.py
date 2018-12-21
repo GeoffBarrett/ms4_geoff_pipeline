@@ -82,15 +82,15 @@ def sort_dataset(*,
     """
 
     if mask_artifacts == 'true':
-        mask = True
+        mask_artifacts = True
     elif mask_artifacts == 'false':
         mask_artifacts = False
     else:
         raise Exception("mask_artifacts must be set to 'true' or 'false'!")
 
-    if whiten == 'true':
+    if whiten.lower() == 'true':
         whiten = True
-    elif whiten == 'false':
+    elif whiten.lower() == 'false':
         whiten = False
     else:
         raise Exception("whiten must be set to 'true' or 'false'!")
@@ -186,40 +186,40 @@ def sort_dataset(*,
             # opts=opts
         )
 
+        next_step_input = filt_out_fname
+
+        # if the user decided to mask the artifacts, do so
         if params['mask_artifacts']:
-            # if the user decided to mask the artifacts, do so
+            # take the bandpassed data and then mask it
             if masked_out_fname is None:
                 masked_out_fname = output_dir + '/masked.mda.prv'
 
             ms4_geoff._mask_artifacts(
-                timeseries=filt_out_fname,
+                # timeseries=filt_out_fname,
+                timeseries=next_step_input,
                 timeseries_out=masked_out_fname,
                 threshold=params['mask_threshold'],
                 chunk_size=params['mask_chunk_size'],
                 num_write_chunks=params['mask_num_write_chunks'],
                 # opts=opts
             )
+            # whiten_input = masked_out_fname
+            next_step_input = masked_out_fname
 
-            whiten_input = masked_out_fname
-
-        else:
-            # otherwise use the bandpassed data as an input
-            whiten_input = filt_out_fname
-
+        # if the user decides to whiten the data, whiten it.
         if whiten:
             if pre_out_fname is None:
+                # if the user hasn't decided to set the output for the whiten data, set it for them
                 pre_out_fname = output_dir + '/pre.mda.prv'
 
-            # Whiten
+            # Whiten the data
             ms4_geoff._whiten(
-                timeseries=whiten_input,
+                # timeseries=whiten_input,
+                timeseries=next_step_input,
                 timeseries_out=pre_out_fname,
                 # opts=opts
             )
-
-            sort_fname = pre_out_fname
-        else:
-            sort_fname = whiten_input
+            next_step_input = pre_out_fname
 
     elif filt_fname is not None:
         # then the data has already been filtered so just mask artifacts/whiten if desired
@@ -243,11 +243,10 @@ def sort_dataset(*,
                 # opts=opts
             )
 
-            whiten_input = masked_out_fname
-
+            next_step_input = masked_out_fname
+            # whiten_input = masked_out_fname
         else:
-            # otherwise use the filtered data as an input
-            whiten_input = filt_fname
+            next_step_input = filt_fname
 
         if whiten:
             if pre_out_fname is None:
@@ -255,30 +254,30 @@ def sort_dataset(*,
 
             # Whiten
             ms4_geoff._whiten(
-                timeseries=whiten_input,
+                # timeseries=whiten_input,
+                timeseries=next_step_input,
                 timeseries_out=pre_out_fname,
                 # opts=opts
             )
+            next_step_input = pre_out_fname
 
-            sort_fname = pre_out_fname
-        else:
-            sort_fname = whiten_input
-
-    else:
-        # then the data has alreayd been pre-processed as the pre_fname is the one defined
+    elif pre_fname is not None:
+        # then the data has already been pre-processed as the pre_fname is the one defined
         if not os.path.exists(pre_fname):
             raise Exception('The following timeseries does not exist: %s!' % pre_fname)
 
         output_dir = os.path.dirname(pre_fname)
-        sort_fname = pre_fname
+        # sort_fname = pre_fname
+        next_step_input  = pre_fname
 
-    # Sort
+    # Data has now been processed, it is time to sort
 
     if firings_out is None:
         firings_out = output_dir + '/firings.mda'
 
     ms4_geoff.ms4alg_sort(
-        timeseries=sort_fname,
+        # timeseries=sort_fname,
+        timeseries=next_step_input,
         geom=geom_fname,
         firings_out=firings_out,
         adjacency_radius=params['adjacency_radius'],
@@ -297,7 +296,8 @@ def sort_dataset(*,
 
     # Compute cluster metrics
     ms4_geoff.compute_cluster_metrics(
-        timeseries=sort_fname,
+        # timeseries=sort_fname,
+        timeseries=next_step_input,
         firings=firings_out,
         metrics_out=temp_metrics,
         samplerate=params['samplerate'],
@@ -305,13 +305,13 @@ def sort_dataset(*,
     )
 
     ms4_geoff.add_curation_tags(cluster_metrics=temp_metrics,
-                      output_filename=metrics_out_fname,
-                      firing_rate_thresh=params['firing_rate_thresh'],
-                      isolation_thresh=params['isolation_thresh'],
-                      noise_overlap_thresh=params['noise_overlap_thresh'],
-                      peak_snr_thresh=params['peak_snr_thresh'],
-                      # opts=opts
-                      )
+                                output_filename=metrics_out_fname,
+                                firing_rate_thresh=params['firing_rate_thresh'],
+                                isolation_thresh=params['isolation_thresh'],
+                                noise_overlap_thresh=params['noise_overlap_thresh'],
+                                peak_snr_thresh=params['peak_snr_thresh'],
+                                # opts=opts
+                                )
 
     os.remove(temp_metrics)
     return True
