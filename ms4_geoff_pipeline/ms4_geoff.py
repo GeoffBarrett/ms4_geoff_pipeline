@@ -52,7 +52,7 @@ def _whiten(*, timeseries, timeseries_out, opts={}):
 
 
 def ms4alg_sort(*, timeseries, geom, firings_out, detect_sign, adjacency_radius, detect_threshold, detect_interval,
-                clip_size, num_workers=os.cpu_count(), opts={}):
+                clip_size, num_features=10, max_num_clips_for_pca=1000, num_workers=os.cpu_count(), opts={}):
     pp = {}
     pp['detect_sign'] = detect_sign
     pp['adjacency_radius'] = adjacency_radius
@@ -60,6 +60,8 @@ def ms4alg_sort(*, timeseries, geom, firings_out, detect_sign, adjacency_radius,
     pp['clip_size'] = clip_size
     pp['detect_interval'] = detect_interval
     pp['num_workers'] = num_workers
+    pp['num_features'] = num_features
+    pp['max_num_clips_for_pca'] = max_num_clips_for_pca
 
     inputs = {'timeseries': timeseries}
     if geom is not None:

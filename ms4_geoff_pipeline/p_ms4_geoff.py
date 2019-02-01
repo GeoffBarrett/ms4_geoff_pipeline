@@ -14,7 +14,7 @@ def sort_dataset(*,
                  adjacency_radius=-1, detect_threshold=3, detect_interval=10, clip_size=50,
                  firing_rate_thresh=0.05, isolation_thresh=0.95, noise_overlap_thresh=0.03,
                  peak_snr_thresh=1.5, mask_artifacts='true', whiten='true',
-                 mask_threshold=6, mask_chunk_size=2000,
+                 mask_threshold=6, mask_chunk_size=2000, num_features=10, max_num_clips_for_pca=1000,
                  mask_num_write_chunks=15, num_workers=os.cpu_count()):
     """
     Custom Sorting Pipeline. It will pre-process, sort, and curate (using ms_taggedcuration pipeline).
@@ -77,6 +77,10 @@ def sort_dataset(*,
         This chunk size will be the number of samples that will be set to zero if the RSS of this chunk is above threshold.
     mask_num_write_chunks : int
         How many mask_chunks will be simultaneously written to mask_out_fname (default of 150).
+    num_features : int
+        Number of features to use when performing PCA
+    max_num_clips_for_pca : int
+        The max number of clips that will be subsampled for PCA.
     num_workers : int
         (Optional) Number of simultaneous workers (or processes). The default is multiprocessing.cpu_count().
     """
@@ -154,15 +158,19 @@ def sort_dataset(*,
               'mask_num_write_chunks': mask_num_write_chunks,
               'mask_artifacts': mask_artifacts,
               'num_workers': num_workers,
+              'num_features': num_features,
+              'max_num_clips_for_pca': max_num_clips_for_pca,
               }
 
     if params_fname is not None:
+        ds_params = None
         if os.path.exists(params_fname):
             ds_params = read_dataset_params(params_fname)
 
-        # override the default parameters
-        for key, value in ds_params.items():
-            params[key] = value
+        if ds_params is not None:
+            # override the default parameters
+            for key, value in ds_params.items():
+                params[key] = value
     else:
         pass
 
@@ -268,7 +276,7 @@ def sort_dataset(*,
 
         output_dir = os.path.dirname(pre_fname)
         # sort_fname = pre_fname
-        next_step_input  = pre_fname
+        next_step_input = pre_fname
 
     # Data has now been processed, it is time to sort
 
@@ -286,6 +294,8 @@ def sort_dataset(*,
         detect_interval=params['detect_interval'],
         clip_size=params['clip_size'],
         num_workers=params['num_workers'],
+        num_features=params['num_features'],
+        max_num_clips_for_pca=params['max_num_clips_for_pca'],
         # opts=opts
     )
 
