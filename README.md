@@ -1,28 +1,16 @@
 # ms4_geoff_pipeline
-This is a full custom MountainSort pipeline that I use to analyze data using the ms4 algorithm.
+This is a full custom MountainSort processor that I use to analyze data using the ms4 algorithm. It incorporates bandpass filteirng, spatial whitening, artifact masking, sorting, curation, and etc. I visual representation of the pipeline can be seen in the image below.
 
-## Installation
+[![ms4_geoff_pipeline_flow_diagram](https://s3.amazonaws.com/geba/media/django-summernote/2019-05-14/ms4_geoff_pipeline_diagram.PNG)
 
-This pipeline also depends on the ms_taggedcuration pipeline located [here](https://bitbucket.org/franklab/franklab_mstaggedcuration) to the $CONDA_PREFIX/etc/mountainlab/packages directory.
+## Documentation
 
-Clone this repository into $CONDA_PREFIX/etc/mountainlab/packages directory
+- [Documentation](https://geba.technology/project/mountainsort-with-windows-mountainsort-custom-ms4_geoff_pipeline-processor)
 
-Example: 
-```
-cd ~/conda/envs/mlab/etc/mountainlab/packages
-git clone https://github.com/GeoffBarrett/ms4_geoff_pipeline.git
-```
+# Authors
 
-Check that the have been added to the processor list
+* **Geoff Barrett** - [Geoff’s GitHub](https://github.com/GeoffBarrett)
 
-```
-ml-list-processors | grep ms4_geoff
-```
+# License
 
-If you do not see **ms4_geoff.sort** then it is possible that the .mp files do not have permissions. Execute the following.
-
-```
-cd ~/conda/envs/mlab/etc/mountainlab/packages/ms4_geoff_pipeline/ms4_geoff_pipeline
-chmod a+x ms4_geoff_spec.py.mp
-```
-
+This project is licensed under the GNU  General  Public  License - see the [LICENSE.md](../master/LICENSE) file for details
